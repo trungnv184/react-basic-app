@@ -1,11 +1,9 @@
 import React, { Component, Suspense } from "react";
 import AppStyles from "./App.module.css";
 import Layout from "./hoc/Layout/Layout";
-// import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 import Checkout from "./containers/Checkout/Checkout";
 import { Route, Switch } from "react-router-dom";
 import Spinner from "./components/UI/Spinner/Spinner";
-// import Orders from "./containers/Orders/Orders";
 
 const Orders = React.lazy(() => import("./containers/Orders/Orders"));
 const BurgerBuilder = React.lazy(() =>
