@@ -26,6 +26,7 @@ class BurgerBuilder extends Component {
   };
 
   async componentDidMount() {
+    console.log(this.props);
     try {
       axios
         .get("ingredients.json")
@@ -128,31 +129,47 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = async () => {
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: "Trung",
-        phone: "0906922555",
-      },
-      dilivery: "fastest",
-    };
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.totalPrice,
+    //   customer: {
+    //     name: "Trung",
+    //     phone: "0906922555",
+    //   },
+    //   dilivery: "fastest",
+    // };
 
-    try {
-      this.setState({
-        loading: true,
-      });
+    // try {
+    //   this.setState({
+    //     loading: true,
+    //   });
 
-      const responsedStatus = await axios.post("/orders.json", order);
-      console.log(responsedStatus);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      this.setState({
-        loading: false,
-        purchasing: false,
-      });
+    //   const responsedStatus = await axios.post("/orders.json", order);
+    //   console.log(responsedStatus);
+    // } catch (e) {
+    //   console.log(e);
+    // } finally {
+    //   this.setState({
+    //     loading: false,
+    //     purchasing: false,
+    //   });
+    // }
+
+    let queryParams = [];
+    for (let igKey in this.state.ingredients) {
+      queryParams.push(
+        encodeURIComponent(igKey) +
+          "=" +
+          encodeURIComponent(this.state.ingredients[igKey])
+      );
     }
+
+    const queryString = queryParams.join("&");
+
+    this.props.history.push({
+      pathname: "/checkout",
+      search: "?" + queryString,
+    });
   };
 
   render() {
