@@ -7,33 +7,83 @@ import Input from "../../../components/UI/Input/Input";
 
 class ContactData extends Component {
   state = {
-    customer: {
-      name: "Alex",
-      phone: "0906925888",
-      email: "trungnv184@gmail.com",
-      street: "Houston",
-      posttal: "84",
+    orderForm: {
+      name: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Name",
+        },
+        value: "",
+      },
+      phone: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Phone",
+        },
+        value: "",
+      },
+      email: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your E-Mail",
+        },
+        value: "",
+      },
+      street: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Street",
+        },
+        value: "",
+      },
+      zipCode: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Zip Code",
+        },
+        value: "",
+      },
+      deliverMethod: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            { value: "fastest", displayValue: "Fastest" },
+            { value: "cheapest", displayValue: "Cheapest" },
+          ],
+        },
+        value: "",
+      },
     },
     loading: false,
   };
 
   orderHandler = (event) => {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
+
     this.setState({
       loading: true,
     });
+
+    const formData = {};
+
+    for (let formElementIdentifier in this.state.orderForm) {
+      formData[formElementIdentifier] = this.state.orderForm[
+        formElementIdentifier
+      ].value;
+    }
     const order = {
       ingredients: {
         ...this.props.ingredients,
       },
       price: this.props.price,
-      customer: {
-        name: "Alex",
-        phone: "0906925888",
-        email: "trungnv184@gmail.com",
-        street: "Houston",
-        posttal: "84",
-      },
+      customer: formData,
     };
 
     axios
@@ -52,17 +102,47 @@ class ContactData extends Component {
     console.log(this.props);
   };
 
+  inputChangedHandler = (event, inputIndentifier) => {
+    console.log("[ContactData]", event.target.value, inputIndentifier);
+
+    const updatedOrderForm = {
+      ...this.state.orderForm,
+    };
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIndentifier],
+    };
+
+    updatedFormElement.value = event.target.value;
+
+    updatedOrderForm[inputIndentifier] = updatedFormElement;
+
+    this.setState({
+      orderForm: updatedOrderForm,
+    });
+  };
+
   render() {
+    let formElementArray = [];
+    for (let key in this.state.orderForm) {
+      formElementArray.push({
+        id: key,
+        config: this.state.orderForm[key],
+      });
+    }
+
     let form = (
-      <form>
-        <Input inputType="input" name="name" placeholder="Your Name" />
-        <Input inputType="input" name="email" placeholder="Your Email" />
-        <Input inputType="input" name="phone" placeholder="Your Phone" />
-        <Input inputType="input" name="street" placeholder="Street" />
-        <Input inputType="input" name="postal" placeholder="Postal Code" />
-        <Button btnType="Success" clicked={this.orderHandler}>
-          ORDER
-        </Button>
+      <form onSubmit={this.orderHandler}>
+        {formElementArray.map((formElement) => (
+          <Input
+            key={formElement.id}
+            elementType={formElement.config.elementType}
+            elementConfig={formElement.config.elementConfig}
+            value={formElement.config.elementConfig.value}
+            changed={(event) => this.inputChangedHandler(event, formElement.id)}
+          />
+        ))}
+        <Button btnType="Success">ORDER</Button>
       </form>
     );
 
@@ -71,7 +151,7 @@ class ContactData extends Component {
     }
     return (
       <div className={classes.ContactData}>
-        <h1>Enter Ordered Customer</h1>
+        <h1>Enter Your Contact Data</h1>
         {form}
       </div>
     );
