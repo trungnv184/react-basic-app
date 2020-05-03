@@ -6,31 +6,11 @@
     box-sizing: border-box;
     border: 1px solid #eeeeee;
     box-shadow: 0 2px 3px #CCCC;
-    display: flex;
-    flex-direction: column;
-
-}
-
-.ContactData form {
-    width: 100%;
-    box-sizing: border-box;
+    display: block;
     height: auto;
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-
+    margin-bottom: 50px;
 }
 
-.ContactData input {
-    height: 20px;
-    margin: 5px 16px;
-}
-
-.ContactData Button {
-    margin-top: 20px;
-    flex: 1;
-    justify-self: flex-end;
-}
 
 @media (min-width: 600px) {
     .ContactData {

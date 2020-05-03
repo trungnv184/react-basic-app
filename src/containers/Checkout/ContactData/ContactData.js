@@ -8,13 +8,11 @@ import Input from "../../../components/UI/Input/Input";
 class ContactData extends Component {
   state = {
     customer: {
-      name: "",
-      phone: "",
-      address: {
-        street: "",
-        streetNumber: "",
-        city: "",
-      },
+      name: "Alex",
+      phone: "0906925888",
+      email: "trungnv184@gmail.com",
+      street: "Houston",
+      posttal: "84",
     },
     loading: false,
   };
@@ -31,12 +29,10 @@ class ContactData extends Component {
       price: this.props.price,
       customer: {
         name: "Alex",
-        phone: "0906925896",
-        address: {
-          street: "Tan Thanh",
-          streetNumber: "10",
-          city: "HCM",
-        },
+        phone: "0906925888",
+        email: "trungnv184@gmail.com",
+        street: "Houston",
+        posttal: "84",
       },
     };
 
@@ -61,6 +57,7 @@ class ContactData extends Component {
       <form>
         <Input inputType="input" name="name" placeholder="Your Name" />
         <Input inputType="input" name="email" placeholder="Your Email" />
+        <Input inputType="input" name="phone" placeholder="Your Phone" />
         <Input inputType="input" name="street" placeholder="Street" />
         <Input inputType="input" name="postal" placeholder="Postal Code" />
         <Button btnType="Success" clicked={this.orderHandler}>
