@@ -89,6 +89,7 @@ class ContactData extends Component {
         touched: false,
       },
     },
+    formIsValid: false,
     loading: false,
   };
 
@@ -151,8 +152,6 @@ class ContactData extends Component {
   }
 
   inputChangedHandler = (event, inputIndentifier) => {
-    console.log("[ContactData]", event.target.value, inputIndentifier);
-
     const updatedOrderForm = {
       ...this.state.orderForm,
     };
@@ -168,12 +167,17 @@ class ContactData extends Component {
     );
 
     updatedFormElement.touched = true;
-
-    console.log(updatedFormElement);
     updatedOrderForm[inputIndentifier] = updatedFormElement;
+
+    let formIsValid = true;
+
+    for (let inputIndentifier in updatedOrderForm) {
+      formIsValid = updatedOrderForm[inputIndentifier].valid && formIsValid;
+    }
 
     this.setState({
       orderForm: updatedOrderForm,
+      formIsValid: formIsValid,
     });
   };
 
@@ -200,7 +204,9 @@ class ContactData extends Component {
             changed={(event) => this.inputChangedHandler(event, formElement.id)}
           />
         ))}
-        <Button btnType="Success">ORDER</Button>
+        <Button btnType="Success" disabled={!this.state.formIsValid}>
+          ORDER
+        </Button>
       </form>
     );
 
