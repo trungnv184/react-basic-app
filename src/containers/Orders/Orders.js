@@ -8,36 +8,7 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions";
 
 class Orders extends Component {
-  // state = {
-  //   orders: [],
-  //   loading: true,
-  // };
-
   componentDidMount() {
-    // axios
-    //   .get("/orders.json")
-    //   .then((reponsed) => {
-    //     if (!reponsed) {
-    //       return;
-    //     }
-
-    //     let orders = [];
-    //     for (let key in reponsed.data) {
-    //       orders.push({
-    //         ...reponsed.data[key],
-    //         id: key,
-    //       });
-    //     }
-    //     this.setState({
-    //       loading: false,
-    //       orders: orders,
-    //     });
-    //   })
-    //   .catch(() => {
-    //     this.setState({
-    //       loading: false,
-    //     });
-    //   });
     this.props.onFetchOrders();
   }
 
