@@ -42,6 +42,7 @@ const reducer = (state = initialState, action) => {
         ingredients: action.ingredients,
         error: false,
         loading: false,
+        totalPrice: 4,
       };
     }
 
