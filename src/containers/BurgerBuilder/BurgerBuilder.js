@@ -12,14 +12,14 @@ import * as burgerBuilderActions from "../../store/actions";
 
 const BurgerBuilder = (props) => {
   const [purchasing, setPurchasing] = useState(false);
+  const { initIngredients } = props;
 
   useEffect(() => {
-    props.initIngredients();
+    initIngredients();
     return () => {
-      // TODO: clean up somthing
       console.log("CLEAN UP PAGE");
     };
-  }, []);
+  }, [initIngredients]);
 
   const updatePurchaseState = (ingredients) => {
     const sum = Object.keys(ingredients)
@@ -54,20 +54,20 @@ const BurgerBuilder = (props) => {
     disabledInfo[key] = disabledInfo[key] <= 0;
   }
 
-  let orderSummary = (
-    <OrderSummary
-      ingredients={props.ings}
-      totalPrice={props.totalPrice}
-      purchaseCanceled={purchaseCancelHandler}
-      purchaseContinued={purchaseContinueHandler}
-    ></OrderSummary>
-  );
-  if (props.loading) {
-    orderSummary = <Spinner />;
-  }
-
   let burger = <Spinner />;
   if (props.ings) {
+    let orderSummary = (
+      <OrderSummary
+        ingredients={props.ings}
+        totalPrice={props.totalPrice}
+        purchaseCanceled={purchaseCancelHandler}
+        purchaseContinued={purchaseContinueHandler}
+      ></OrderSummary>
+    );
+    if (props.loading) {
+      orderSummary = <Spinner />;
+    }
+
     burger = (
       <Aux>
         <Modal show={purchasing}>{orderSummary}</Modal>
